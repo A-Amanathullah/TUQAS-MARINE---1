@@ -11,6 +11,14 @@ const navItems = [
   { path: '/contact', label: 'Contact' },
 ]
 
+const footerServices = [
+  { path: '/chartering', label: 'Ship Chartering' },
+  { path: '/sale-purchase', label: 'Sale & Purchase' },
+  { path: '/consultancy', label: 'Marine Consultancy' },
+]
+
+const footerHighlights = ['Ship SL', 'Global marine advisory', 'Commercial support']
+
 export function SiteLayout() {
   return (
     <div className="page">
@@ -40,8 +48,54 @@ export function SiteLayout() {
       <Outlet />
 
       <footer className="footer">
-        <p>{company.fullName}</p>
-        <a href={company.phoneHref}>{company.phone}</a>
+        <div className="footer-brand">
+          <NavLink className="brand footer-brand-link" to="/" aria-label={`${company.shortName} home`}>
+            <img className="brand-logo" src={company.logo} alt={`${company.shortName} logo`} />
+            <span>
+              <strong>{company.shortName}</strong>
+              <small>{company.fullName}</small>
+            </span>
+          </NavLink>
+          <p>
+            Maritime advisory for chartering, sale and purchase, and consultancy projects with a calm, commercial focus.
+          </p>
+          <div className="footer-highlights">
+            {footerHighlights.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
+        </div>
+
+        <div className="footer-column">
+          <h4>Quick links</h4>
+          <div className="footer-links">
+            {navItems.map((item) => (
+              <NavLink key={item.path} to={item.path} end={item.path === '/'}>
+                {item.label}
+              </NavLink>
+            ))}
+          </div>
+        </div>
+
+        <div className="footer-column">
+          <h4>Services</h4>
+          <div className="footer-links">
+            {footerServices.map((item) => (
+              <NavLink key={item.path} to={item.path}>
+                {item.label}
+              </NavLink>
+            ))}
+          </div>
+        </div>
+
+        <div className="footer-column footer-contact">
+          <h4>Contact</h4>
+          <a href={company.phoneHref}>{company.phone}</a>
+          <NavLink className="footer-cta" to="/contact">
+            Send inquiry
+          </NavLink>
+          <small>Prompt response for chartering, vessel transactions, and marine consultancy inquiries.</small>
+        </div>
       </footer>
     </div>
   )
