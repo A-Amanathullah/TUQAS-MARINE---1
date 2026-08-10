@@ -1,4 +1,4 @@
-import logo from '../assets/logo svg.svg'
+import logo from '../assets/logo r.svg'
 import heroImage from '../assets/bright-ship- leaving-dark-sea.jpg'
 import charterImage from '../assets/blue-ship-passing blue-sea.jpg'
 import saleImage from '../assets/small-harber-holding-large-ship.jpg'
