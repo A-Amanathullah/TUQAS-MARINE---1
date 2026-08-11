@@ -1,4 +1,5 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import { company } from '../data/siteData.js'
 
 const navItems = [
@@ -20,6 +21,14 @@ const footerServices = [
 const footerHighlights = ['Ship SL', 'Global marine advisory', 'Commercial support']
 
 export function SiteLayout() {
+  const [navOpen, setNavOpen] = useState(false)
+  const location = useLocation()
+
+  useEffect(() => {
+    // close mobile nav when route changes
+    setNavOpen(false)
+  }, [location.pathname])
+
   return (
     <div className="page">
       <header className="topbar">
@@ -31,13 +40,27 @@ export function SiteLayout() {
           </span>
         </NavLink>
 
-        <nav className="nav" aria-label="Primary navigation">
+        <button
+          className="nav-toggle"
+          aria-controls="primary-navigation"
+          aria-expanded={navOpen}
+          onClick={() => setNavOpen((s) => !s)}
+          aria-label={navOpen ? 'Close navigation' : 'Open navigation'}
+        >
+          <span className="sr-only">Toggle navigation</span>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
+        <nav id="primary-navigation" className={`nav ${navOpen ? 'open' : ''}`} aria-label="Primary navigation">
           {navItems.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
               end={item.path === '/'}
               className={({ isActive }) => (isActive ? 'active' : undefined)}
+              onClick={() => setNavOpen(false)}
             >
               {item.label}
             </NavLink>
